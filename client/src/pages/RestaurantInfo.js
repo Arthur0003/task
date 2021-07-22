@@ -6,18 +6,16 @@ import { Rate } from 'antd';
 
 const RestaurantInfo = () => {
     const [data, setData] = useState({});
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const params = useParams();
 
     useEffect(() => {
-        setLoading(true);
         fetch(`/restaurants/${params.id}`)
             .then((response) => response.json())
             .then((json) => {
                 setData(() => json);
-                // setRate(json.rate)
+                setLoading(false);
             });
-        setLoading(false);
     }, [params.id]);
 
     function changingRate(e) {
@@ -46,7 +44,9 @@ const RestaurantInfo = () => {
                             onChange={(e) => changingRate(e)}
                         />
                         <Card.Text>
-                            <span style={{ display: 'block', fontSize: 30 }}>INFO</span>
+                            <span style={{ display: 'block', fontSize: 30 }}>
+                                INFO
+                            </span>
                             {data.info}
                         </Card.Text>
                     </Card.Body>
